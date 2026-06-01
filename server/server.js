@@ -103,7 +103,11 @@ function serveStatic(req, res) {
       return;
     }
     var ext = path.extname(filePath).toLowerCase();
-    res.writeHead(200, { "Content-Type": MIME[ext] || "application/octet-stream" });
+    res.writeHead(200, {
+      "Content-Type": MIME[ext] || "application/octet-stream",
+      // Evita que el navegador sirva HTML/JS/CSS cacheados tras un deploy.
+      "Cache-Control": "no-cache, must-revalidate"
+    });
     res.end(data);
   });
 }

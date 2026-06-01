@@ -46,6 +46,16 @@ function render(session) {
   }
 }
 
+// Pestañas del panel (Live / Estrategias)
+$$(".app-tab").forEach((tab) => {
+  tab.addEventListener("click", () => {
+    const view = tab.dataset.view;
+    $$(".app-tab").forEach((t) => t.classList.toggle("is-active", t === tab));
+    $("#view-live").hidden = view !== "live";
+    $("#view-strategies").hidden = view !== "strategies";
+  });
+});
+
 $("#auth-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   await login();

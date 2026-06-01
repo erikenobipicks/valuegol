@@ -51,6 +51,31 @@
 
     <!-- ===== APP (logueado) ===== -->
     <section class="app-view" id="app-view" hidden>
+      <nav class="app-tabs" role="tablist" aria-label="Secciones">
+        <button class="app-tab is-active" type="button" data-view="live" role="tab">⚡ Live</button>
+        <button class="app-tab" type="button" data-view="strategies" role="tab">📋 Estrategias</button>
+      </nav>
+
+      <!-- ===== VISTA: SCANNER LIVE ===== -->
+      <div class="app-panel" id="view-live">
+        <div class="app-head"><div><h1>Scanner en directo</h1><p class="app-lead">Partidos en vivo y sus métricas, en tiempo real.</p></div></div>
+        <div class="card dashboard">
+          <div class="dashboard__toolbar">
+            <span class="badge badge--live" id="scanner-count">EN VIVO</span>
+            <span class="dashboard__source" id="scanner-source" hidden>demo</span>
+            <span class="dashboard__updated" id="scanner-updated" aria-live="polite"></span>
+          </div>
+          <div class="table" role="table" aria-label="Partidos en directo">
+            <div class="table__head" role="row"><span>Partido</span><span>Min</span><span>Tiros</span><span>Córners</span><span>Presión</span><span></span></div>
+            <div id="scanner-rows" aria-live="polite">
+              <div class="table__row" role="row"><span class="t-match muted">Cargando partidos…</span><span></span><span></span><span></span><span></span><span></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== VISTA: ESTRATEGIAS ===== -->
+      <div class="app-panel" id="view-strategies" hidden>
       <!-- Conectar Telegram -->
       <div class="card tg-card" id="tg-card" hidden>
         <div class="tg-card__info">
@@ -74,6 +99,7 @@
       <div class="strategy-list" id="strategy-list" aria-live="polite">
         <p class="muted" id="list-empty" hidden>Aún no tienes estrategias. Crea la primera ↑</p>
       </div>
+      </div><!-- /view-strategies -->
 
       <!-- ===== BUILDER (modal/panel) ===== -->
       <div class="builder-panel" id="builder" hidden>
@@ -115,6 +141,7 @@
     </section>
   </main>
 
+  <script src="assets/js/scanner-live.js" defer></script>
   <script type="module" src="assets/js/app.js"></script>
 </body>
 </html>

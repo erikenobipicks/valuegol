@@ -45,6 +45,12 @@ input:focus-visible, select:focus-visible { outline: none; border-color: var(--c
 .icon-btn { width: 34px; height: 34px; border-radius: 8px; color: var(--muted); border: 1px solid var(--border); }
 .icon-btn:hover { color: var(--text); border-color: var(--border-2); }
 
+/* ---- Pestañas del panel ---- */
+.app-tabs { display: flex; gap: .4rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: .9rem; }
+.app-tab { font-weight: 600; font-size: .95rem; color: var(--muted); padding: .55rem 1rem; border-radius: 999px; border: 1px solid transparent; transition: color .2s, background .2s; }
+.app-tab:hover { color: var(--text); }
+.app-tab.is-active { color: #04121b; background: var(--accent-grad); }
+
 /* ---- Tarjeta Telegram ---- */
 .tg-card { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
 .tg-card.is-linked { border-color: rgba(52,211,153,.4); }

@@ -56,20 +56,41 @@
         <button class="app-tab" type="button" data-view="strategies" role="tab">📋 Estrategias</button>
       </nav>
 
-      <!-- ===== VISTA: SCANNER LIVE ===== -->
+      <!-- ===== VISTA: SCANNER LIVE (pro, configurable) ===== -->
       <div class="app-panel" id="view-live">
-        <div class="app-head"><div><h1>Scanner en directo</h1><p class="app-lead">Partidos en vivo y sus métricas, en tiempo real.</p></div></div>
-        <div class="card dashboard">
-          <div class="dashboard__toolbar">
-            <span class="badge badge--live" id="scanner-count">EN VIVO</span>
-            <span class="dashboard__source" id="scanner-source" hidden>demo</span>
-            <span class="dashboard__updated" id="scanner-updated" aria-live="polite"></span>
-          </div>
-          <div class="table" role="table" aria-label="Partidos en directo">
-            <div class="table__head" role="row"><span>Partido</span><span>Min</span><span>Tiros</span><span>Córners</span><span>Presión</span><span></span></div>
-            <div id="scanner-rows" aria-live="polite">
-              <div class="table__row" role="row"><span class="t-match muted">Cargando partidos…</span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="app-head">
+          <div><h1>Scanner en directo</h1><p class="app-lead">Partidos en vivo, configurable. Ordena, filtra y elige columnas.</p></div>
+          <span class="badge badge--live" id="sc-count">EN VIVO</span>
+        </div>
+
+        <div class="card scanner">
+          <div class="scanner__toolbar">
+            <input id="sc-search" class="scanner__search" type="search" placeholder="🔎 Buscar equipo o liga…" aria-label="Buscar">
+            <select id="sc-minute" class="scanner__sel" aria-label="Tramo de minuto">
+              <option value="all">Todo el partido</option>
+              <option value="1h">1ª parte (≤45')</option>
+              <option value="2h">2ª parte (&gt;45')</option>
+              <option value="final">Recta final (≥75')</option>
+            </select>
+            <select id="sc-pressure" class="scanner__sel" aria-label="Presión">
+              <option value="all">Presión: todas</option>
+              <option value="media">Media o alta</option>
+              <option value="alta">Solo alta</option>
+            </select>
+            <label class="scanner__check"><input type="checkbox" id="sc-signal"> Solo señales</label>
+            <div class="scanner__cols">
+              <button id="sc-cols-btn" class="btn btn--ghost btn--sm" type="button" aria-expanded="false">⚙ Columnas</button>
+              <div id="sc-cols-menu" class="scanner__cols-menu" hidden></div>
             </div>
+            <button id="sc-reset" class="btn btn--ghost btn--sm" type="button" title="Restablecer">↺</button>
+            <span class="scanner__meta" id="sc-meta" aria-live="polite"></span>
+          </div>
+
+          <div class="scanner__scroll">
+            <table class="scanner__table" id="sc-table">
+              <thead><tr id="sc-head"></tr></thead>
+              <tbody id="sc-body"><tr><td class="muted" style="padding:1rem">Cargando partidos…</td></tr></tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -141,7 +162,7 @@
     </section>
   </main>
 
-  <script src="assets/js/scanner-live.js" defer></script>
+  <script src="assets/js/scanner-pro.js" defer></script>
   <script type="module" src="assets/js/app.js"></script>
 </body>
 </html>

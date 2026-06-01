@@ -373,14 +373,19 @@ async function saveStrategy() {
   const query = editingId
     ? sb.from("strategy").update(payload).eq("id", editingId)
     : sb.from("strategy").insert(payload);
-  // Timeout de seguridad: si la red se cuelga, no nos quedamos en "Guardando…" para siempre.
+  // Timeout de seguridad: si la respuesta no llega, NO nos quedamos colgados.
   const timeout = new Promise((resolve) =>
-    setTimeout(() => resolve({ error: { message: "La conexión tardó demasiado. Reintenta." } }), 12000)
+    setTimeout(() => resolve({ __timeout: true }), 10000)
   );
-  const res = await Promise.race([query, timeout]).catch((e) => ({ error: { message: e.message || "Error al guardar." } }));
+  const res = await Promise.race([query, timeout]).catch((e) => ({ error: { message: e.message || "Error" } }));
 
   btn.disabled = false;
-  if (res && res.error) return msg(m, res.error.message, "err");
+  // Cerramos SIEMPRE y refrescamos: el listado muestra lo que de verdad se guardó.
   closeBuilder();
-  loadStrategies();
+  await loadStrategies();
+
+  // Si hubo un error REAL del servidor (no un simple timeout), avisamos sin bloquear.
+  if (res && res.error && !res.__timeout) {
+    alert("Aviso al guardar: " + res.error.message + "\nRevisa la lista por si se guardó igualmente.");
+  }
 }

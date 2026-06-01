@@ -21,3 +21,12 @@ services:
       # Sin ella, el scanner funciona en modo demo.
       - key: APIFOOTBALL_KEY
         sync: false
+      # Fase 2: motor en vivo + Telegram. Secretas → se ponen en el dashboard.
+      - key: SUPABASE_URL
+        value: "https://eeqttlazijazoqtbbjiq.supabase.co"
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_BOT_USERNAME
+        sync: false

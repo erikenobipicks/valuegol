@@ -17,6 +17,9 @@ var http = require("http");
 var fs = require("fs");
 var path = require("path");
 var provider = require("./provider");
+var evaluator = require("./evaluator");
+var telegram = require("./telegram");
+var admin = require("./supabase-admin");
 
 // --- Mini-cargador de .env (sin dependencias) ---------------
 (function loadEnv() {
@@ -59,6 +62,13 @@ async function refresh() {
     }
   }
   state = { matches: provider.getDemo(), source: "demo", updatedAt: Date.now(), error: null };
+}
+
+// Tras cada refresco, evalúa las estrategias activas contra los partidos.
+async function refreshAndEvaluate() {
+  await refresh();
+  try { await evaluator.evaluateTick(state.matches, Date.now()); }
+  catch (e) { console.error("[eval] error en el tick:", e.message); }
 }
 
 // --- Servidor de estáticos (con protección de path traversal)
@@ -119,18 +129,50 @@ var server = http.createServer(function (req, res) {
   }
   if (req.url.split("?")[0] === "/api/health") {
     res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ ok: true, source: state.source, hasKey: !!KEY }));
+    res.end(JSON.stringify({ ok: true, source: state.source, hasKey: !!KEY, engine: admin.enabled(), telegram: telegram.enabled() }));
+    return;
+  }
+  if (req.url.split("?")[0] === "/api/config") {
+    res.writeHead(200, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" });
+    res.end(JSON.stringify({ telegramBot: process.env.TELEGRAM_BOT_USERNAME || null }));
     return;
   }
   serveStatic(req, res);
 });
 
+// --- Bot de Telegram: vinculación de cuentas ----------------
+function startTelegramBot() {
+  if (!(telegram.enabled() && admin.enabled())) return;
+  telegram.pollUpdates(async function (msg) {
+    try {
+      var m = msg.text.match(/^\/start\s+(\S+)/);
+      if (m) {
+        var user = await admin.findByLinkToken(m[1]).catch(function () { return null; });
+        if (user) {
+          await admin.linkTelegram(user.id, msg.chatId);
+          await telegram.sendMessage(msg.chatId, "✅ <b>Telegram conectado</b> a ValueGol.\nRecibirás aquí tus alertas cuando una estrategia se cumpla.");
+        } else {
+          await telegram.sendMessage(msg.chatId, "No reconozco ese código. Genéralo de nuevo desde ValueGol → <i>Conectar Telegram</i>.");
+        }
+      } else if (/^\/start/.test(msg.text)) {
+        await telegram.sendMessage(msg.chatId, "¡Hola " + msg.name + "! 👋\nPara vincular tu cuenta, pulsa <b>Conectar Telegram</b> en ValueGol.");
+      } else {
+        await telegram.sendMessage(msg.chatId, "Tu chat está activo ✅. Las alertas llegarán aquí.");
+      }
+    } catch (e) { console.error("[tg] error procesando mensaje:", e.message); }
+  });
+  console.log("Bot de Telegram: escuchando para vincular cuentas.");
+}
+
 // --- Arranque -----------------------------------------------
-refresh().then(function () {
-  setInterval(refresh, POLL_INTERVAL);
+refreshAndEvaluate().then(function () {
+  setInterval(refreshAndEvaluate, POLL_INTERVAL);
+  startTelegramBot();
   server.listen(PORT, function () {
     var mode = (KEY && !FORCE_DEMO) ? "API-Football (key detectada)" : "DEMO";
     console.log("ValueGol backend en http://localhost:" + PORT + "  ·  modo: " + mode);
     console.log("Scanner API: http://localhost:" + PORT + "/api/matches/live");
+    console.log("Motor en vivo: " + (admin.enabled() ? "ON (Supabase)" : "OFF (sin SUPABASE_SERVICE_KEY)") +
+      " · Telegram: " + (telegram.enabled() ? "ON" : "OFF"));
   });
 });

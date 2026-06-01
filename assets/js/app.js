@@ -38,6 +38,7 @@ function render(session) {
     userbar.hidden = false;
     $("#user-email").textContent = session.user.email;
     loadCatalog().then(loadStrategies);
+    loadTelegram(session.user.id);
   } else {
     authView.hidden = false;
     appView.hidden = true;
@@ -107,6 +108,58 @@ function metricOptions(selected) {
     html += `</optgroup>`;
   }
   return html;
+}
+
+// ============================================================
+// CONECTAR TELEGRAM
+// ============================================================
+let tgBot = null;     // username del bot (desde /api/config)
+let tgPoll = null;    // intervalo de sondeo tras pulsar conectar
+
+async function loadTelegram(userId) {
+  const card = $("#tg-card");
+  // username del bot (si el backend lo expone)
+  try { tgBot = (await (await fetch("/api/config")).json()).telegramBot; } catch (e) { tgBot = null; }
+
+  const { data } = await sb.from("profile").select("telegram_chat_id").eq("id", userId).single();
+  const linked = !!(data && data.telegram_chat_id);
+  card.hidden = false;
+  card.classList.toggle("is-linked", linked);
+
+  if (linked) {
+    $("#tg-title").textContent = "Telegram conectado ✅";
+    $("#tg-sub").textContent = "Recibirás tus alertas en tu chat.";
+    $("#btn-tg").textContent = "Desconectar";
+    $("#btn-tg").onclick = async () => {
+      await sb.from("profile").update({ telegram_chat_id: null }).eq("id", userId);
+      loadTelegram(userId);
+    };
+  } else {
+    $("#tg-title").textContent = "Conecta Telegram";
+    $("#tg-sub").textContent = tgBot ? "Recibe tus alertas al instante en tu móvil." : "Pendiente: el bot aún no está configurado en el servidor.";
+    $("#btn-tg").textContent = "Conectar Telegram";
+    $("#btn-tg").disabled = !tgBot;
+    $("#btn-tg").onclick = () => connectTelegram(userId);
+  }
+}
+
+async function connectTelegram(userId) {
+  if (!tgBot) return;
+  const token = (crypto.randomUUID && crypto.randomUUID()) || ("t" + Date.now() + Math.random().toString(36).slice(2));
+  await sb.from("profile").update({ tg_link_token: token }).eq("id", userId);
+  window.open(`https://t.me/${tgBot}?start=${token}`, "_blank");
+  // sondea hasta que el backend vincule el chat_id (máx ~2 min)
+  $("#tg-sub").textContent = "Abre el chat y pulsa Iniciar / Start…";
+  if (tgPoll) clearInterval(tgPoll);
+  let tries = 0;
+  tgPoll = setInterval(async () => {
+    tries++;
+    const { data } = await sb.from("profile").select("telegram_chat_id").eq("id", userId).single();
+    if ((data && data.telegram_chat_id) || tries > 40) {
+      clearInterval(tgPoll); tgPoll = null;
+      loadTelegram(userId);
+    }
+  }, 3000);
 }
 
 // ============================================================

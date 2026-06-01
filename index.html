@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ====== SEO (EDITAR) ====== -->
+  <title>PicksGuru — Análisis de fútbol en directo y alertas por Telegram</title>
+  <meta name="description" content="Crea estrategias personalizadas, analiza métricas de partidos en directo y recibe alertas automáticas por Telegram cuando un partido cumple tus condiciones. Prueba gratis.">
+  <meta name="keywords" content="análisis fútbol en directo, scanner live fútbol, alertas telegram fútbol, estrategias fútbol, estadísticas en vivo">
+  <meta name="author" content="PicksGuru">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.tudominio.com/">
+  <meta name="theme-color" content="#0a0f1c">
+
+  <!-- Open Graph (EDITAR url e imagen) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="PicksGuru — Análisis de fútbol en directo y alertas por Telegram">
+  <meta property="og:description" content="Métricas live, estrategias personalizadas y alertas automáticas por Telegram. Detecta señales antes de que sea tarde.">
+  <meta property="og:url" content="https://www.tudominio.com/">
+  <meta property="og:image" content="https://www.tudominio.com/assets/img/og-image.jpg">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:site_name" content="PicksGuru">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PicksGuru — Análisis de fútbol en directo y alertas por Telegram">
+  <meta name="twitter:description" content="Métricas live, estrategias personalizadas y alertas automáticas por Telegram.">
+  <meta name="twitter:image" content="https://www.tudominio.com/assets/img/og-image.jpg">
+
+  <!-- Favicon SVG inline (EDITAR) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a0f1c'/%3E%3Cpath d='M8 20l5-6 4 3 7-9' fill='none' stroke='%2322d3ee' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+
+  <link rel="preload" href="assets/css/styles.css" as="style">
+  <link rel="stylesheet" href="assets/css/styles.css">
+
+  <!-- JSON-LD: SoftwareApplication (EDITAR datos) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "PicksGuru",
+    "applicationCategory": "SportsApplication",
+    "operatingSystem": "Web",
+    "description": "Plataforma de análisis de fútbol en directo con scanner live, estrategias personalizadas y alertas automáticas por Telegram.",
+    "offers": [
+      { "@type": "Offer", "name": "Plan Free", "price": "0", "priceCurrency": "EUR" },
+      { "@type": "Offer", "name": "Plan Pro", "price": "19", "priceCurrency": "EUR" }
+    ]
+  }
+  </script>
+  <!-- JSON-LD: FAQ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "¿Necesito conocimientos técnicos para crear estrategias?", "acceptedAnswer": { "@type": "Answer", "text": "No. El editor de estrategias es visual: combinas condiciones con menús desplegables, sin programar nada." } },
+      { "@type": "Question", "name": "¿Las alertas llegan en tiempo real?", "acceptedAnswer": { "@type": "Answer", "text": "Sí. En cuanto un partido cumple las condiciones de tu estrategia recibes la notificación en Telegram en segundos." } },
+      { "@type": "Question", "name": "¿Puedo cancelar cuando quiera?", "acceptedAnswer": { "@type": "Answer", "text": "Sí. El plan se cancela en un clic desde tu panel y mantienes el acceso hasta el final del periodo pagado." } },
+      { "@type": "Question", "name": "¿Esto garantiza ganancias?", "acceptedAnswer": { "@type": "Answer", "text": "No. PicksGuru es una herramienta de análisis e información. No garantiza resultados ni constituye consejo de inversión o apuesta." } }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Saltar al contenido</a>
+
+  <!-- ============================================================ -->
+  <!-- 1. HEADER STICKY                                             -->
+  <!-- ============================================================ -->
+  <header class="site-header" id="top">
+    <div class="container header__inner">
+      <a class="brand" href="#top" aria-label="PicksGuru, inicio">
+        <svg class="brand__mark" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <rect width="32" height="32" rx="8" fill="url(#bg-grad)"/>
+          <path d="M8 20l5-6 4 3 7-9" fill="none" stroke="#0a0f1c" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="bg-grad" x1="0" y1="0" x2="32" y2="32">
+              <stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#34d399"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <span class="brand__name">Picks<span class="brand__accent">Guru</span></span>
+      </a>
+
+      <nav class="nav" aria-label="Navegación principal">
+        <!-- Selector de idioma (se rellena desde i18n.js) -->
+        <div class="lang" data-lang-switcher role="group" aria-label="Selector de idioma">
+          <svg class="lang__ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/></svg>
+        </div>
+        <button class="nav__toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Abrir menú">
+          <span class="nav__bar"></span><span class="nav__bar"></span><span class="nav__bar"></span>
+        </button>
+        <ul class="nav__menu" id="nav-menu">
+          <li><a href="#como-funciona" data-i18n="nav.how">Cómo funciona</a></li>
+          <li><a href="#estrategias" data-i18n="nav.strategies">Estrategias</a></li>
+          <li><a href="#scanner" data-i18n="nav.scanner">Scanner live</a></li>
+          <li><a href="#precios" data-i18n="nav.pricing">Precios</a></li>
+          <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
+          <li class="nav__cta"><a class="btn btn--primary btn--sm" href="#cta-final" data-i18n="nav.cta">Probar gratis</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ========================================================== -->
+    <!-- 2. HERO                                                    -->
+    <!-- ========================================================== -->
+    <section class="hero section" aria-labelledby="hero-title">
+      <div class="container hero__grid">
+        <div class="hero__copy reveal">
+          <p class="eyebrow"><span class="dot-live" aria-hidden="true"></span> <span data-i18n="hero.eyebrow">Análisis en directo · Tiempo real</span></p>
+          <h1 id="hero-title" data-i18n="hero.title">Detecta señales en partidos en directo antes de que sea tarde</h1>
+          <p class="hero__sub" data-i18n="hero.sub">Crea estrategias personalizadas, analiza métricas live y recibe alertas automáticas por Telegram cuando un partido cumple tus condiciones.</p>
+          <div class="hero__actions">
+            <a class="btn btn--primary btn--lg" href="#cta-final" data-i18n="hero.cta1">Probar gratis</a>
+            <a class="btn btn--ghost btn--lg" href="#como-funciona" data-i18n="hero.cta2">Ver cómo funciona</a>
+          </div>
+          <ul class="hero__trust" aria-label="Garantías">
+            <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> <span data-i18n="hero.trust1">Sin tarjeta para empezar</span></li>
+            <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> <span data-i18n="hero.trust2">Cancela cuando quieras</span></li>
+            <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> <span data-i18n="hero.trust3">Alertas en segundos</span></li>
+          </ul>
+        </div>
+
+        <!-- Mockup dashboard (SVG propio) -->
+        <div class="hero__mockup reveal" aria-hidden="true">
+          <div class="mock mock--dash">
+            <div class="mock__bar">
+              <span class="mock__dotrow"><i></i><i></i><i></i></span>
+              <span class="mock__title">Scanner live</span>
+              <span class="badge badge--live">EN VIVO</span>
+            </div>
+            <div class="mock__body">
+              <div class="mock__match">
+                <div class="mock__teams"><strong>Rayo Verde</strong><span>2 — 1</span><strong>Atlético Azul</strong></div>
+                <div class="mock__min">78'</div>
+              </div>
+              <div class="mock__stats">
+                <div class="stat"><span>Tiros a puerta</span><b>9</b><div class="meter"><i style="width:72%"></i></div></div>
+                <div class="stat"><span>Córners</span><b>7</b><div class="meter"><i style="width:58%"></i></div></div>
+                <div class="stat"><span>Posesión</span><b>63%</b><div class="meter"><i style="width:63%"></i></div></div>
+                <div class="stat"><span>Ataques peligrosos</span><b>41</b><div class="meter"><i style="width:84%"></i></div></div>
+              </div>
+              <div class="mock__alert">
+                <svg class="ico ico--tg" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 4 3 11l6 2 2 6 4-5 5 3z"/></svg>
+                <div><strong>Señal detectada</strong><span>Presión alta + 7 córners · "Over 9.5 córners"</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="hero__glow" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Logos / barra de confianza (EDITAR) -->
+    <section class="logos" aria-label="Confianza">
+      <div class="container">
+        <p class="logos__label">Datos cubriendo las principales competiciones</p>
+        <ul class="logos__row">
+          <li>+50 ligas</li><li>Datos por segundo</li><li>+30 métricas live</li><li>Alertas 24/7</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- 3. CÓMO FUNCIONA (3 pasos)                                 -->
+    <!-- ========================================================== -->
+    <section class="section" id="como-funciona" aria-labelledby="how-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow" data-i18n="how.eyebrow">Cómo funciona</p>
+          <h2 id="how-title" data-i18n="how.title">De la idea a la alerta en tres pasos</h2>
+          <p class="section__lead" data-i18n="how.lead">Configura una vez y deja que el sistema vigile cada partido por ti.</p>
+        </header>
+        <ol class="steps">
+          <li class="card step reveal">
+            <span class="step__num">1</span>
+            <h3>Define tu estrategia</h3>
+            <p>Combina condiciones —minuto, marcador, tiros, córners, presión— en un editor visual. Sin programar.</p>
+          </li>
+          <li class="card step reveal">
+            <span class="step__num">2</span>
+            <h3>El scanner vigila en directo</h3>
+            <p>Analizamos los partidos en tiempo real y comprobamos tus reglas segundo a segundo.</p>
+          </li>
+          <li class="card step reveal">
+            <span class="step__num">3</span>
+            <h3>Recibe la alerta</h3>
+            <p>Cuando un partido cumple tus condiciones, te avisamos al instante por Telegram.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- 4. ALERTAS TELEGRAM                                        -->
+    <!-- ========================================================== -->
+    <section class="section section--alt" id="alertas" aria-labelledby="tg-title">
+      <div class="container split">
+        <div class="split__copy reveal">
+          <p class="eyebrow" data-i18n="tg.eyebrow">Alertas por Telegram</p>
+          <h2 id="tg-title" data-i18n="tg.title">Las señales llegan donde ya estás</h2>
+          <p class="section__lead" data-i18n="tg.lead">Nada de mirar la pantalla todo el día. Conecta tu Telegram en un minuto y recibe avisos claros y accionables en cuanto se cumple tu estrategia.</p>
+          <ul class="ticks">
+            <li>Notificación con el contexto: partido, minuto y condición disparada.</li>
+            <li>Silencia o prioriza estrategias por canal.</li>
+            <li>Historial de cada alerta para revisar después.</li>
+          </ul>
+          <a class="btn btn--primary" href="#cta-final">Probar gratis</a>
+        </div>
+
+        <!-- Mockup notificación Telegram (SVG/HTML propio) -->
+        <div class="split__media reveal" aria-hidden="true">
+          <div class="mock mock--phone">
+            <div class="phone__notch"></div>
+            <div class="phone__chat">
+              <div class="tg-msg">
+                <div class="tg-msg__head">
+                  <span class="tg-avatar">PG</span>
+                  <span class="tg-name">PicksGuru Bot</span>
+                  <span class="tg-time">21:42</span>
+                </div>
+                <p class="tg-msg__title">⚡ Señal detectada</p>
+                <p class="tg-msg__body"><strong>Rayo Verde 2–1 Atlético Azul</strong> · 78'<br>Estrategia: <em>"Presión alta + córners"</em></p>
+                <ul class="tg-msg__meta">
+                  <li>Córners: 7</li><li>Tiros: 9</li><li>Ataques pelig.: 41</li>
+                </ul>
+              </div>
+              <div class="tg-msg tg-msg--in">
+                <div class="tg-msg__head"><span class="tg-avatar tg-avatar--2">SC</span><span class="tg-name">Scanner</span><span class="tg-time">21:44</span></div>
+                <p class="tg-msg__body">✅ Condición mantenida 2 min. Sigue activa.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- 5. ESTRATEGIAS PERSONALIZADAS                              -->
+    <!-- ========================================================== -->
+    <section class="section" id="estrategias" aria-labelledby="strat-title">
+      <div class="container split split--reverse">
+        <div class="split__copy reveal">
+          <p class="eyebrow" data-i18n="st.eyebrow">Estrategias personalizadas</p>
+          <h2 id="strat-title" data-i18n="st.title">Tus reglas, vigiladas automáticamente</h2>
+          <p class="section__lead" data-i18n="st.lead">Construye condiciones tan simples o tan finas como quieras. Guárdalas, duplícalas y actívalas con un clic.</p>
+          <ul class="ticks">
+            <li>Operadores por métrica: mayor que, menor que, rango.</li>
+            <li>Combina varias condiciones con Y / O.</li>
+            <li>Filtros por liga, minuto y estado del partido.</li>
+          </ul>
+          <a class="btn btn--ghost" href="#scanner">Ver el scanner</a>
+        </div>
+
+        <!-- Mockup editor de estrategia (ejemplo avanzado) -->
+        <div class="split__media reveal" aria-hidden="true">
+          <div class="mock mock--builder">
+            <div class="mock__bar"><span class="mock__title" data-i18n="st.advanced">Estrategia avanzada · Goles 1ª parte</span><span class="badge">Pro</span></div>
+            <div class="builder__row builder__row--rich">
+              <span class="chip">Goles 1ªP marcados</span><span class="dim">últ. 10 · casa</span>
+              <span class="op">≥</span><span class="val">0.6</span>
+            </div>
+            <div class="builder__and">Y</div>
+            <div class="builder__row builder__row--rich">
+              <span class="chip chip--calc">GF casa + GC fuera</span><span class="dim">media</span>
+              <span class="op">≥</span><span class="val">1.6</span>
+            </div>
+            <div class="builder__and">Y</div>
+            <div class="builder__row builder__row--rich">
+              <span class="chip chip--odds">Cuota 1ªP Over 0.5</span><span class="dim">pre-partido</span>
+              <span class="op">&lt;</span><span class="val">1.25</span>
+            </div>
+            <div class="builder__and">Y</div>
+            <div class="builder__row builder__row--rich">
+              <span class="chip chip--live">Goles al descanso</span><span class="dim">en directo</span>
+              <span class="op">≤</span><span class="val">1</span>
+            </div>
+            <div class="builder__more" data-i18n="st.more">+ 8 condiciones más · % goles HT, tarjetas rojas…</div>
+            <div class="builder__save"><span>Notificar por Telegram</span><span class="switch" data-on="true"></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- 6. SCANNER LIVE (dashboard ficticio)                       -->
+    <!-- ========================================================== -->
+    <section class="section section--alt" id="scanner" aria-labelledby="scan-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow" data-i18n="sc.eyebrow">Scanner live</p>
+          <h2 id="scan-title" data-i18n="sc.title">Todos los partidos, una sola pantalla</h2>
+          <p class="section__lead" data-i18n="sc.lead">Ordena por la métrica que te importa y detecta a simple vista dónde está pasando algo.</p>
+        </header>
+        <div class="card dashboard reveal">
+          <div class="dashboard__toolbar">
+            <span class="badge badge--live" id="scanner-count">EN VIVO</span>
+            <span class="dashboard__source" id="scanner-source" hidden>demo</span>
+            <span class="dashboard__updated" id="scanner-updated" aria-live="polite"></span>
+            <div class="dashboard__filters" aria-hidden="true"><span class="chip chip--active">Todos</span><span class="chip">Presión</span><span class="chip">Córners</span><span class="chip">Tiros</span></div>
+          </div>
+          <div class="table" role="table" aria-label="Partidos en directo">
+            <div class="table__head" role="row"><span>Partido</span><span>Min</span><span>Tiros</span><span>Córners</span><span>Presión</span><span></span></div>
+            <!-- Filas pobladas por scanner-live.js desde /api/matches/live. Estas son el fallback estático. -->
+            <div id="scanner-rows" aria-live="polite">
+              <div class="table__row" role="row">
+                <span class="t-match">Rayo Verde <b>2–1</b> Atlético Azul</span><span>78'</span><span>9</span><span>7</span>
+                <span><span class="pill pill--hot">Alta</span></span><span class="pill pill--signal">Señal</span>
+              </div>
+              <div class="table__row" role="row">
+                <span class="t-match">Costa FC <b>0–0</b> Unión Norte</span><span>61'</span><span>4</span><span>3</span>
+                <span><span class="pill pill--mid">Media</span></span><span></span>
+              </div>
+              <div class="table__row" role="row">
+                <span class="t-match">Sporting Sur <b>1–1</b> Real Cima</span><span>83'</span><span>11</span><span>9</span>
+                <span><span class="pill pill--hot">Alta</span></span><span class="pill pill--signal">Señal</span>
+              </div>
+              <div class="table__row" role="row">
+                <span class="t-match">Deportivo Río <b>3–1</b> CD Llano</span><span>55'</span><span>6</span><span>2</span>
+                <span><span class="pill pill--low">Baja</span></span><span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- 7. MOMENTUM / PRESIÓN (gráfico visual)                     -->
+    <!-- ========================================================== -->
+    <section class="section" id="momentum" aria-labelledby="mom-title">
+      <div class="container split">
+        <div class="split__copy reveal">
+          <p class="eyebrow" data-i18n="mo.eyebrow">Momentum del partido</p>
+          <h2 id="mom-title" data-i18n="mo.title">Mide quién está apretando, no solo el marcador</h2>
+          <p class="section__lead" data-i18n="mo.lead">El indicador de presión combina ataques peligrosos, tiros y posesión reciente para mostrarte el impulso real de cada equipo, minuto a minuto.</p>
+          <ul class="ticks">
+            <li>Curva de momentum en tiempo real.</li>
+            <li>Picos de presión resaltados automáticamente.</li>
+            <li>Úsalo como condición en tus estrategias.</li>
+          </ul>
+        </div>
+
+        <!-- Gráfico de momentum (SVG propio) -->
+        <div class="split__media reveal">
+          <div class="card chart" role="img" aria-label="Gráfico de momentum: el equipo local domina la presión en los minutos finales del partido.">
+            <div class="chart__legend"><span class="lg lg--home">Local</span><span class="lg lg--away">Visitante</span></div>
+            <svg viewBox="0 0 320 160" class="chart__svg" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="fillHome" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#34d399" stop-opacity=".45"/><stop offset="1" stop-color="#34d399" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <line x1="0" y1="80" x2="320" y2="80" stroke="rgba(255,255,255,.12)" stroke-dasharray="3 4"/>
+              <path d="M0 120 L40 110 L80 95 L120 100 L160 70 L200 60 L240 40 L280 30 L320 20 L320 160 L0 160 Z" fill="url(#fillHome)"/>
+              <path d="M0 120 L40 110 L80 95 L120 100 L160 70 L200 60 L240 40 L280 30 L320 20" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M0 100 L40 105 L80 112 L120 108 L160 120 L200 125 L240 132 L280 138 L320 142" fill="none" stroke="#22d3ee" stroke-width="2.5" stroke-linecap="round" opacity=".85"/>
+              <circle cx="280" cy="30" r="4" fill="#34d399"/>
+            </svg>
+            <div class="chart__axis"><span>0'</span><span>30'</span><span>60'</span><span>90'</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- 8. HISTÓRICO Y EXPORTACIÓN                                 -->
+    <!-- ========================================================== -->
+    <section class="section section--alt" id="historico" aria-labelledby="hist-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow" data-i18n="hi.eyebrow">Histórico y datos</p>
+          <h2 id="hist-title" data-i18n="hi.title">Revisa, mide y exporta lo que importa</h2>
+          <p class="section__lead" data-i18n="hi.lead">Cada alerta queda registrada. Analiza el rendimiento de tus estrategias y llévate los datos en un clic.</p>
+        </header>
+        <div class="features">
+          <article class="card feature reveal">
+            <svg class="feature__ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>
+            <h3>Rendimiento por estrategia</h3>
+            <p>Cuántas veces se activó cada regla y en qué contexto, con resúmenes claros.</p>
+          </article>
+          <article class="card feature reveal">
+            <svg class="feature__ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12"/><path d="M8 11l4 4 4-4"/><path d="M4 21h16"/></svg>
+            <h3>Exporta a CSV</h3>
+            <p>Descarga el histórico de alertas y métricas para analizarlo donde prefieras.</p>
+          </article>
+          <article class="card feature reveal">
+            <svg class="feature__ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            <h3>Histórico completo</h3>
+            <p>Accede a partidos pasados y filtra por liga, fecha o estrategia.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- 9. CASOS DE USO                                            -->
+    <!-- ========================================================== -->
+    <section class="section" id="casos" aria-labelledby="cases-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow" data-i18n="ca.eyebrow">Casos de uso</p>
+          <h2 id="cases-title" data-i18n="ca.title">Pensado para tu forma de seguir el fútbol</h2>
+        </header>
+        <div class="features">
+          <article class="card feature reveal">
+            <span class="feature__tag">Analista</span>
+            <h3>Vigila muchos partidos a la vez</h3>
+            <p>Deja de saltar entre pestañas. Define qué buscas y que el scanner haga la guardia.</p>
+          </article>
+          <article class="card feature reveal">
+            <span class="feature__tag">Aficionado de datos</span>
+            <h3>Entiende el partido más allá del marcador</h3>
+            <p>Presión, tiros y córners te cuentan la historia real de lo que está pasando.</p>
+          </article>
+          <article class="card feature reveal">
+            <span class="feature__tag">Creador de contenido</span>
+            <h3>Detecta momentos clave al instante</h3>
+            <p>Recibe avisos de partidos calientes para reaccionar antes que nadie.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- 10. PRUEBA SOCIAL / TESTIMONIOS (EDITAR)                   -->
+    <!-- ========================================================== -->
+    <section class="section section--alt" id="testimonios" aria-labelledby="test-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow" data-i18n="te.eyebrow">Lo que dicen</p>
+          <h2 id="test-title" data-i18n="te.title">Usuarios que ya no se pierden una señal</h2>
+        </header>
+        <div class="testimonials">
+          <figure class="card testimonial reveal">
+            <div class="stars" aria-label="5 de 5 estrellas">★★★★★</div>
+            <blockquote>Configuré tres estrategias en una tarde y ahora me llegan solas por Telegram. Dejé de mirar la pantalla constantemente.</blockquote>
+            <figcaption><span class="avatar" aria-hidden="true">LM</span><span><strong>Laura M.</strong><small>Analista aficionada</small></span></figcaption>
+          </figure>
+          <figure class="card testimonial reveal">
+            <div class="stars" aria-label="5 de 5 estrellas">★★★★★</div>
+            <blockquote>El indicador de presión es lo que más uso. Ver el momentum en directo cambia por completo cómo leo un partido.</blockquote>
+            <figcaption><span class="avatar" aria-hidden="true">DR</span><span><strong>David R.</strong><small>Creador de contenido</small></span></figcaption>
+          </figure>
+          <figure class="card testimonial reveal">
+            <div class="stars" aria-label="5 de 5 estrellas">★★★★★</div>
+            <blockquote>Limpio, rápido y sin ruido. El histórico exportable me permite revisar qué reglas funcionan mejor.</blockquote>
+            <figcaption><span class="avatar" aria-hidden="true">SC</span><span><strong>Sara C.</strong><small>Usuaria Pro</small></span></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- 11. PRECIOS                                                -->
+    <!-- ========================================================== -->
+    <section class="section" id="precios" aria-labelledby="price-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow" data-i18n="pr.eyebrow">Precios</p>
+          <h2 id="price-title" data-i18n="pr.title">Empieza gratis. Sube a Pro cuando lo necesites</h2>
+          <p class="section__lead" data-i18n="pr.lead">Sin permanencia. Cancela cuando quieras.</p>
+        </header>
+        <div class="pricing">
+          <article class="card plan reveal">
+            <h3 class="plan__name">Free</h3>
+            <p class="plan__price"><span class="plan__amount">0€</span><span class="plan__per" data-i18n="pr.per">/mes</span></p>
+            <p class="plan__desc" data-i18n="pr.freedesc">Para empezar a explorar el scanner.</p>
+            <ul class="plan__list">
+              <li>Scanner live básico</li>
+              <li>1 estrategia activa</li>
+              <li>Alertas por Telegram</li>
+              <li>Histórico de 7 días</li>
+            </ul>
+            <a class="btn btn--ghost btn--block" href="#cta-final" data-i18n="pr.freecta">Probar gratis</a>
+          </article>
+
+          <article class="card plan plan--featured reveal">
+            <span class="plan__badge" data-i18n="pr.popular">Más popular</span>
+            <h3 class="plan__name">Pro</h3>
+            <p class="plan__price"><span class="plan__amount">19€</span><span class="plan__per" data-i18n="pr.per">/mes</span></p>
+            <p class="plan__desc" data-i18n="pr.prodesc">Para quien va en serio con el análisis.</p>
+            <ul class="plan__list">
+              <li>Scanner live completo · +30 métricas</li>
+              <li>Estrategias ilimitadas</li>
+              <li>Indicador de momentum/presión</li>
+              <li>Histórico completo + exportación CSV</li>
+              <li>Alertas prioritarias</li>
+            </ul>
+            <a class="btn btn--primary btn--block" href="#cta-final" data-i18n="pr.procta">Empezar con Pro</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- 12. FAQ                                                    -->
+    <!-- ========================================================== -->
+    <section class="section section--alt" id="faq" aria-labelledby="faq-title">
+      <div class="container container--narrow">
+        <header class="section__head reveal">
+          <p class="eyebrow" data-i18n="fa.eyebrow">FAQ</p>
+          <h2 id="faq-title" data-i18n="fa.title">Preguntas frecuentes</h2>
+        </header>
+        <div class="faq">
+          <details class="faq__item reveal">
+            <summary data-i18n="fa.q1">¿Necesito conocimientos técnicos para crear estrategias?</summary>
+            <div class="faq__body"><p>No. El editor es visual: combinas condiciones con menús desplegables, sin escribir una sola línea de código.</p></div>
+          </details>
+          <details class="faq__item reveal">
+            <summary data-i18n="fa.q2">¿Las alertas llegan en tiempo real?</summary>
+            <div class="faq__body"><p>Sí. En cuanto un partido cumple las condiciones de tu estrategia recibes la notificación en Telegram en segundos.</p></div>
+          </details>
+          <details class="faq__item reveal">
+            <summary data-i18n="fa.q3">¿Qué necesito para recibir avisos por Telegram?</summary>
+            <div class="faq__body"><p>Solo conectar tu cuenta de Telegram al bot desde tu panel. El proceso tarda menos de un minuto.</p></div>
+          </details>
+          <details class="faq__item reveal">
+            <summary data-i18n="fa.q4">¿Puedo cancelar cuando quiera?</summary>
+            <div class="faq__body"><p>Sí. Cancelas en un clic desde tu panel y mantienes el acceso hasta el final del periodo ya pagado.</p></div>
+          </details>
+          <details class="faq__item reveal">
+            <summary data-i18n="fa.q5">¿Esto garantiza ganancias?</summary>
+            <div class="faq__body"><p>No. PicksGuru es una herramienta de análisis e información estadística. No garantiza resultados ni constituye consejo de apuesta o inversión.</p></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- 13. CTA FINAL                                              -->
+    <!-- ========================================================== -->
+    <section class="section cta-final" id="cta-final" aria-labelledby="cta-title">
+      <div class="container">
+        <div class="cta-final__panel reveal">
+          <h2 id="cta-title" data-i18n="cf.title">Empieza a detectar señales hoy mismo</h2>
+          <p data-i18n="cf.text">Crea tu primera estrategia gratis y recibe tu próxima alerta por Telegram.</p>
+          <!-- Formulario simple (EDITAR action) -->
+          <form class="cta-form" action="#" method="post" novalidate>
+            <label class="sr-only" for="email">Tu correo electrónico</label>
+            <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="tu@email.com" data-i18n-attr="placeholder:cf.email" required>
+            <button class="btn btn--primary btn--lg" type="submit" data-i18n="cf.btn">Probar gratis</button>
+          </form>
+          <p class="cta-final__note" data-i18n="cf.note">Sin tarjeta. Cancela cuando quieras.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================================ -->
+  <!-- 14. FOOTER                                                   -->
+  <!-- ============================================================ -->
+  <footer class="site-footer">
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <a class="brand" href="#top" aria-label="PicksGuru, inicio">
+          <svg class="brand__mark" width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="url(#bg-grad2)"/><path d="M8 20l5-6 4 3 7-9" fill="none" stroke="#0a0f1c" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="bg-grad2" x1="0" y1="0" x2="32" y2="32"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#34d399"/></linearGradient></defs></svg>
+          <span class="brand__name">Picks<span class="brand__accent">Guru</span></span>
+        </a>
+        <p class="footer__tag" data-i18n="fo.tag">Análisis de fútbol en directo con alertas inteligentes por Telegram.</p>
+      </div>
+
+      <nav class="footer__col" aria-label="Producto">
+        <h3 data-i18n="fo.prod">Producto</h3>
+        <ul><li><a href="#como-funciona" data-i18n="nav.how">Cómo funciona</a></li><li><a href="#scanner" data-i18n="nav.scanner">Scanner live</a></li><li><a href="#estrategias" data-i18n="nav.strategies">Estrategias</a></li><li><a href="#precios" data-i18n="nav.pricing">Precios</a></li></ul>
+      </nav>
+      <nav class="footer__col" aria-label="Recursos">
+        <h3 data-i18n="fo.res">Recursos</h3>
+        <ul><li><a href="#faq" data-i18n="nav.faq">FAQ</a></li><li><a href="#testimonios">Opiniones</a></li><li><a href="#">Blog</a></li><li><a href="#">Contacto</a></li></ul>
+      </nav>
+      <nav class="footer__col" aria-label="Legal">
+        <h3 data-i18n="fo.legal">Legal</h3>
+        <ul><li><a href="#">Aviso legal</a></li><li><a href="#">Privacidad</a></li><li><a href="#">Cookies</a></li><li><a href="#">Términos</a></li></ul>
+      </nav>
+    </div>
+
+    <div class="container footer__bottom">
+      <p class="footer__disclaimer" data-i18n="fo.disclaimer">
+        Aviso: PicksGuru es una herramienta de análisis estadístico e información deportiva. No constituye consejo de apuesta ni de inversión y no garantiza resultados. Juega con responsabilidad. Solo para mayores de 18 años (+18).
+      </p>
+      <p class="footer__copy">© <span id="year">2026</span> <span data-i18n="fo.copy">PicksGuru. Todos los derechos reservados.</span></p>
+    </div>
+  </footer>
+
+  <script src="assets/js/i18n.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/scanner-live.js" defer></script>
+</body>
+</html>

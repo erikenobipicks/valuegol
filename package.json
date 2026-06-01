@@ -1,0 +1,15 @@
+{
+  "name": "picksguru",
+  "version": "0.1.0",
+  "private": true,
+  "description": "PicksGuru — landing + backend Fase 1 (scanner live). Análisis de fútbol en directo con alertas por Telegram.",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node server/server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "UNLICENSED"
+}

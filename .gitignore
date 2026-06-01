@@ -1,0 +1,22 @@
+# Dependencias
+node_modules/
+
+# Entorno / secretos (NUNCA subir la API key)
+.env
+.env.local
+*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Claude / preview local
+.claude/launch.json

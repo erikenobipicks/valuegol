@@ -1,8 +1,8 @@
 {
-  "name": "picksguru",
+  "name": "valuegol",
   "version": "0.1.0",
   "private": true,
-  "description": "PicksGuru — landing + backend Fase 1 (scanner live). Análisis de fútbol en directo con alertas por Telegram.",
+  "description": "ValueGol — landing + backend Fase 1 (scanner live). Análisis de fútbol en directo con alertas por Telegram.",
   "type": "commonjs",
   "scripts": {
     "start": "node server/server.js",

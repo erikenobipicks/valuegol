@@ -1,5 +1,5 @@
 /* ============================================================
-   PicksGuru — i18n (infraestructura multiidioma)
+   ValueGol — i18n (infraestructura multiidioma)
    Vanilla, sin dependencias.
 
    CÓMO AÑADIR UN IDIOMA (p. ej. inglés):
@@ -33,7 +33,7 @@
   // Diccionarios. La clave es estable; el valor es el texto mostrado.
   var translations = {
     es: {
-      "meta.title": "PicksGuru — Análisis de fútbol en directo y alertas por Telegram",
+      "meta.title": "ValueGol — Análisis de fútbol en directo y alertas por Telegram",
       "meta.description": "Crea estrategias personalizadas, analiza métricas de partidos en directo y recibe alertas automáticas por Telegram cuando un partido cumple tus condiciones. Prueba gratis.",
 
       "nav.how": "Cómo funciona",
@@ -112,8 +112,8 @@
       "fo.prod": "Producto",
       "fo.res": "Recursos",
       "fo.legal": "Legal",
-      "fo.disclaimer": "Aviso: PicksGuru es una herramienta de análisis estadístico e información deportiva. No constituye consejo de apuesta ni de inversión y no garantiza resultados. Juega con responsabilidad. Solo para mayores de 18 años (+18).",
-      "fo.copy": "PicksGuru. Todos los derechos reservados."
+      "fo.disclaimer": "Aviso: ValueGol es una herramienta de análisis estadístico e información deportiva. No constituye consejo de apuesta ni de inversión y no garantiza resultados. Juega con responsabilidad. Solo para mayores de 18 años (+18).",
+      "fo.copy": "ValueGol. Todos los derechos reservados."
     }
   };
 

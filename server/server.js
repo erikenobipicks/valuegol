@@ -1,6 +1,6 @@
 "use strict";
 /* ============================================================
-   PicksGuru — Backend Fase 1 (sin dependencias)
+   ValueGol — Backend Fase 1 (sin dependencias)
    - Sirve la landing estática (index.html, assets, …).
    - Expone GET /api/matches/live con el estado actual.
    - Poller en segundo plano: si hay APIFOOTBALL_KEY consulta el
@@ -130,7 +130,7 @@ refresh().then(function () {
   setInterval(refresh, POLL_INTERVAL);
   server.listen(PORT, function () {
     var mode = (KEY && !FORCE_DEMO) ? "API-Football (key detectada)" : "DEMO";
-    console.log("PicksGuru backend en http://localhost:" + PORT + "  ·  modo: " + mode);
+    console.log("ValueGol backend en http://localhost:" + PORT + "  ·  modo: " + mode);
     console.log("Scanner API: http://localhost:" + PORT + "/api/matches/live");
   });
 });

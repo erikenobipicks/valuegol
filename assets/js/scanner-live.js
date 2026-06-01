@@ -1,5 +1,5 @@
 /* ============================================================
-   PicksGuru — Scanner live (frontend)
+   ValueGol — Scanner live (frontend)
    Consume /api/matches/live del backend y refresca la tabla.
    Si el backend no está disponible (p. ej. abriendo el HTML como
    archivo suelto), conserva las filas estáticas de ejemplo.

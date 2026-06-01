@@ -1,4 +1,4 @@
-/* PicksGuru — interacciones de la landing. Vanilla, sin dependencias. */
+/* ValueGol — interacciones de la landing. Vanilla, sin dependencias. */
 (function () {
   "use strict";
 

@@ -1,4 +1,4 @@
-# PicksGuru — Landing page
+# ValueGol — Landing page
 
 Landing comercial para una plataforma de análisis de fútbol en directo con scanner live, estrategias personalizadas y alertas por Telegram.
 
@@ -7,7 +7,7 @@ Landing comercial para una plataforma de análisis de fútbol en directo con sca
 ## Estructura
 
 ```
-picksguru/
+valuegol/
 ├── index.html            # Página completa (14 secciones) + SEO + JSON-LD
 ├── assets/
 │   ├── css/styles.css     # Tokens (variables), componentes y responsive
@@ -51,7 +51,7 @@ Cambia esos valores y la web entera se actualiza.
 ## ⚠️ Qué debes sustituir manualmente
 
 ### Marca y dominio
-- **"PicksGuru"**: aparece en `index.html` (header, footer, JSON-LD, `<title>`). Busca y reemplaza por tu marca.
+- **"ValueGol"**: aparece en `index.html` (header, footer, JSON-LD, `<title>`). Busca y reemplaza por tu marca.
 - **`https://www.tudominio.com/`**: cámbialo en `index.html` (canonical, Open Graph, Twitter), `robots.txt` y `sitemap.xml`.
 - **Favicon / logo**: el logo es un SVG inline en el header y footer. El favicon es un `data:` SVG en `<head>`. Sustitúyelos por tu marca real.
 

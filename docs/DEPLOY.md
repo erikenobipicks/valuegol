@@ -1,4 +1,4 @@
-# PicksGuru — Despliegue (Fase 1)
+# ValueGol — Despliegue (Fase 1)
 
 La app es un **único servicio Node sin dependencias** que sirve la landing y el
 endpoint `/api/matches/live`. Funciona en **modo demo sin configurar nada** (datos que
@@ -29,7 +29,7 @@ Para datos reales: copia `.env.example` a `.env`, pon tu `APIFOOTBALL_KEY` y rei
    - **Start Command:** `node server/server.js`
    - **Environment:** añade `APIFOOTBALL_KEY` (opcional) y, si la pones,
      `POLL_INTERVAL=900000` para respetar el free tier (100 req/día).
-4. Deploy. Render asigna una URL pública (`https://picksguru.onrender.com`).
+4. Deploy. Render asigna una URL pública (`https://valuegol.onrender.com`).
 
 > El plan free de Render "duerme" tras inactividad; la primera carga tras un rato
 > tarda unos segundos en despertar. Normal en demos.
@@ -49,9 +49,9 @@ el diseño, no la función live. Settings → Pages → Branch `main` / root.
 ```bash
 git init
 git add .
-git commit -m "PicksGuru: landing + backend Fase 1 (scanner live)"
+git commit -m "ValueGol: landing + backend Fase 1 (scanner live)"
 git branch -M main
-git remote add origin https://github.com/<usuario>/picksguru.git
+git remote add origin https://github.com/<usuario>/valuegol.git
 git push -u origin main
 ```
 

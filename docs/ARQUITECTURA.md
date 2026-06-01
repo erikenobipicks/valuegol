@@ -1,4 +1,4 @@
-# PicksGuru — Documento de Arquitectura Técnica
+# ValueGol — Documento de Arquitectura Técnica
 
 > Estado: **borrador v1** · Alcance: plataforma de análisis de fútbol en directo con
 > scanner live, estrategias personalizadas y alertas por Telegram.
@@ -328,7 +328,7 @@ sustituir el render estático por un handler de estos mensajes.
 ## 9. Alertas Telegram
 
 **Vinculación:** el usuario pulsa "conectar Telegram" → abre el bot con un token de
-deep-link (`t.me/PicksGuruBot?start=<token>`) → el bot guarda su `chat_id` en `profile`.
+deep-link (`t.me/ValueGolBot?start=<token>`) → el bot guarda su `chat_id` en `profile`.
 
 **Envío:** cuando el motor dispara una alerta:
 1. Crea fila en `alert`.

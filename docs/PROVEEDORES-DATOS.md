@@ -1,4 +1,4 @@
-# PicksGuru — Comparativa de proveedores de datos
+# ValueGol — Comparativa de proveedores de datos
 
 > Estado: **borrador v1** · Junio 2026.
 > Objetivo: elegir el feed que alimenta el scanner live, las estrategias y las alertas.

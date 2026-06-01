@@ -1,6 +1,6 @@
 "use strict";
 /* ============================================================
-   PicksGuru — Adaptador de proveedor de datos
+   ValueGol — Adaptador de proveedor de datos
    - fetchLiveReal(key): consume API-Football (api-sports.io) y
      normaliza a NUESTRO modelo interno.
    - getDemo(): datos sintéticos que evolucionan con el tiempo

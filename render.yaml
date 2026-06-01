@@ -1,0 +1,23 @@
+# Render Blueprint — despliegue automático de ValueGol (Fase 1)
+# Doc: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: valuegol
+    runtime: node
+    plan: free
+    # Sin dependencias → build no hace nada.
+    buildCommand: "echo 'sin dependencias'"
+    startCommand: "node server/server.js"
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      # Versión de Node (fetch global disponible en 18+).
+      - key: NODE_VERSION
+        value: "22"
+      # Free tier de API-Football = 100 req/día → 15 min entre consultas.
+      - key: POLL_INTERVAL
+        value: "900000"
+      # API key: se define a mano en el dashboard (NO se versiona).
+      # Sin ella, el scanner funciona en modo demo.
+      - key: APIFOOTBALL_KEY
+        sync: false

@@ -1,8 +1,13 @@
-# ValueGol — Landing page
+# ValueGol — Landing + scanner live
 
-Landing comercial para una plataforma de análisis de fútbol en directo con scanner live, estrategias personalizadas y alertas por Telegram.
+Plataforma de análisis de fútbol en directo con scanner live, estrategias personalizadas y alertas por Telegram.
 
-**Stack:** HTML + CSS + JavaScript vanilla. Sin build, sin dependencias, sin frameworks. Abre `index.html` directamente en el navegador.
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/erikenobipicks/valuegol)
+
+**Stack:** Landing en HTML + CSS + JS vanilla (sin build) y un backend Node sin dependencias (`server/`) que la sirve y expone `/api/matches/live`. Ver [`docs/DEPLOY.md`](docs/DEPLOY.md).
+
+- **Local:** `node server/server.js` → http://localhost:3000 (modo demo, sin configurar nada).
+- **Datos reales:** copia `.env.example` a `.env` y pon `APIFOOTBALL_KEY`.
 
 ## Estructura
 

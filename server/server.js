@@ -133,7 +133,7 @@ var server = http.createServer(function (req, res) {
   }
   if (req.url.split("?")[0] === "/api/health") {
     res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ ok: true, source: state.source, hasKey: !!KEY, engine: admin.enabled(), telegram: telegram.enabled() }));
+    res.end(JSON.stringify({ ok: true, source: state.source, hasKey: !!KEY, engine: admin.enabled(), telegram: telegram.enabled(), liveStats: process.env.LIVE_STATS === "1", error: state.error }));
     return;
   }
   if (req.url.split("?")[0] === "/api/config") {

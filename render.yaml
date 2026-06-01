@@ -17,6 +17,11 @@ services:
       # Free tier de API-Football = 100 req/día → 15 min entre consultas.
       - key: POLL_INTERVAL
         value: "900000"
+      # Stats reales en vivo (Fase 3). "1" solo con plan Pro (gasta requests).
+      - key: LIVE_STATS
+        value: "0"
+      - key: MAX_STAT_FIXTURES
+        value: "8"
       # API key: se define a mano en el dashboard (NO se versiona).
       # Sin ella, el scanner funciona en modo demo.
       - key: APIFOOTBALL_KEY

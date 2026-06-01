@@ -13,11 +13,17 @@
 
 var API_BASE = "https://v3.football.api-sports.io";
 
-/* ---- Modelo interno de un partido ----
-   { id, league, country, home, away, scoreHome, scoreAway,
-     minute, status, shots, corners, pressure, signal } */
+/* ---- Modelo interno de un partido (mismo shape que getDemo) ---- */
 
-// --- API-Football: fixtures en directo ---------------------
+function toInt(v) { if (v == null) return null; var n = parseInt(String(v), 10); return isNaN(n) ? null : n; }
+function toPct(v) { if (v == null) return null; var n = parseInt(String(v).replace("%", ""), 10); return isNaN(n) ? null : n; }
+function statVal(stats, type) {
+  if (!stats) return null;
+  for (var i = 0; i < stats.length; i++) if (stats[i].type === type) return stats[i].value;
+  return null;
+}
+
+// --- API-Football: lista de fixtures en directo ------------
 function normalizeReal(fixtures) {
   return (fixtures || []).map(function (f) {
     var fx = f.fixture || {};
@@ -35,27 +41,66 @@ function normalizeReal(fixtures) {
       scoreAway: goals.away != null ? goals.away : 0,
       minute: st.elapsed != null ? st.elapsed : null,
       status: st.short || "LIVE",
-      // El endpoint live=all NO trae stats detalladas (ahorra requests
-      // en el free tier). Tiros/córners/presión requieren otra llamada
-      // (/fixtures/statistics) que añadiremos en una fase posterior.
-      shots: null,
-      corners: null,
+      // Detalle: null hasta enriquecer con /fixtures/statistics.
+      shots: null, corners: null, dangerous_attacks: null, red_cards: null, yellow_cards: null,
       pressure: null,
+      possessionHome: null, possessionAway: null,
+      shotsHome: null, shotsAway: null, sotHome: null, sotAway: null,
+      cornersHome: null, cornersAway: null, attacksHome: null, attacksAway: null,
+      dangerousHome: null, dangerousAway: null, momentumHome: null, momentumAway: null,
       signal: false
     };
   });
 }
 
+// Pide estadísticas de un partido y las fusiona en el modelo.
+async function fetchStats(key, fixtureId) {
+  var res = await fetch(API_BASE + "/fixtures/statistics?fixture=" + fixtureId, { headers: { "x-apisports-key": key } });
+  if (!res.ok) return null;
+  var json = await res.json();
+  return (json.response && json.response.length >= 2) ? json.response : null;
+}
+
+function applyStats(m, resp) {
+  var h = resp[0] && resp[0].statistics;  // local
+  var a = resp[1] && resp[1].statistics;  // visitante
+  m.shotsHome = toInt(statVal(h, "Total Shots"));   m.shotsAway = toInt(statVal(a, "Total Shots"));
+  m.sotHome   = toInt(statVal(h, "Shots on Goal")); m.sotAway   = toInt(statVal(a, "Shots on Goal"));
+  m.cornersHome = toInt(statVal(h, "Corner Kicks")); m.cornersAway = toInt(statVal(a, "Corner Kicks"));
+  m.possessionHome = toPct(statVal(h, "Ball Possession")); m.possessionAway = toPct(statVal(a, "Ball Possession"));
+  m.yellow_cards = (toInt(statVal(h, "Yellow Cards")) || 0) + (toInt(statVal(a, "Yellow Cards")) || 0);
+  m.red_cards    = (toInt(statVal(h, "Red Cards")) || 0) + (toInt(statVal(a, "Red Cards")) || 0);
+  m.shots   = (m.shotsHome || 0) + (m.shotsAway || 0);
+  m.corners = (m.cornersHome || 0) + (m.cornersAway || 0);
+  // Presión aproximada SIN ataques peligrosos (API-Football no los da):
+  // combina tiros, córners y posesión.
+  var sc = function (sh, co, po) { return (sh || 0) * 2.4 + (co || 0) * 3.6 + ((po || 50) - 50) * 0.4; };
+  m.momentumHome = Math.max(0, Math.min(100, Math.round(sc(m.shotsHome, m.cornersHome, m.possessionHome))));
+  m.momentumAway = Math.max(0, Math.min(100, Math.round(sc(m.shotsAway, m.cornersAway, m.possessionAway))));
+  var mx = Math.max(m.momentumHome, m.momentumAway);
+  m.pressure = mx >= 60 ? "alta" : mx >= 32 ? "media" : "baja";
+  m.signal = m.pressure === "alta" && (m.corners || 0) >= 7;
+}
+
 async function fetchLiveReal(key) {
-  var res = await fetch(API_BASE + "/fixtures?live=all", {
-    headers: { "x-apisports-key": key }
-  });
+  var res = await fetch(API_BASE + "/fixtures?live=all", { headers: { "x-apisports-key": key } });
   if (!res.ok) throw new Error("API-Football HTTP " + res.status);
   var json = await res.json();
   if (json.errors && !Array.isArray(json.errors) && Object.keys(json.errors).length) {
     throw new Error("API-Football: " + JSON.stringify(json.errors));
   }
-  return normalizeReal(json.response || []);
+  var matches = normalizeReal(json.response || []);
+
+  // Enriquecer con estadísticas REALES (opt-in; consume 1 request por partido).
+  // OJO free tier (100/día): deja LIVE_STATS apagado o sube a plan Pro.
+  if (process.env.LIVE_STATS === "1" && matches.length) {
+    var cap = parseInt(process.env.MAX_STAT_FIXTURES, 10) || 8;
+    var subset = matches.slice(0, cap);
+    for (var i = 0; i < subset.length; i++) {
+      try { var s = await fetchStats(key, subset[i].id); if (s) applyStats(subset[i], s); } catch (e) {}
+    }
+  }
+  return matches;
 }
 
 // --- Datos demo (evolucionan con el reloj) -----------------

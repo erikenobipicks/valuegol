@@ -176,7 +176,7 @@ function openBuilder(s) {
   else addCondition("simple");
   builder.hidden = false;
 }
-function closeBuilder() { builder.hidden = true; }
+function closeBuilder() { builder.hidden = true; msg($("#builder-msg"), ""); }
 
 // --- Sub-controles de "spec de métrica" (metric + window + venue + team) ---
 function specHTML(suffix, spec = {}) {
@@ -305,17 +305,29 @@ async function saveStrategy() {
   if (!definition.conditions.length) return msg(m, "Añade al menos una condición.", "err");
 
   const { data: { session } } = await sb.auth.getSession();
+  if (!session) return msg(m, "Tu sesión ha caducado. Vuelve a entrar.", "err");
   const payload = {
     user_id: session.user.id,
     name,
     definition,
     notify: { telegram: $("#s-telegram").checked },
   };
+
+  const btn = $("#builder-save");
+  btn.disabled = true;                       // evita doble clic
   msg(m, "Guardando…");
-  let res;
-  if (editingId) res = await sb.from("strategy").update(payload).eq("id", editingId);
-  else res = await sb.from("strategy").insert(payload);
-  if (res.error) return msg(m, res.error.message, "err");
+
+  const query = editingId
+    ? sb.from("strategy").update(payload).eq("id", editingId)
+    : sb.from("strategy").insert(payload);
+  // Timeout de seguridad: si la red se cuelga, no nos quedamos en "Guardando…" para siempre.
+  const timeout = new Promise((resolve) =>
+    setTimeout(() => resolve({ error: { message: "La conexión tardó demasiado. Reintenta." } }), 12000)
+  );
+  const res = await Promise.race([query, timeout]).catch((e) => ({ error: { message: e.message || "Error al guardar." } }));
+
+  btn.disabled = false;
+  if (res && res.error) return msg(m, res.error.message, "err");
   closeBuilder();
   loadStrategies();
 }

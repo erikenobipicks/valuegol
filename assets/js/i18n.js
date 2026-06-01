@@ -41,6 +41,7 @@
       "nav.scanner": "Scanner live",
       "nav.pricing": "Precios",
       "nav.faq": "FAQ",
+      "nav.login": "Acceder",
       "nav.cta": "Probar gratis",
 
       "hero.eyebrow": "Análisis en directo · Tiempo real",

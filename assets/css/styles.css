@@ -50,6 +50,10 @@
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; }
 
+/* El atributo [hidden] SIEMPRE oculta, aunque una regla de clase fije display.
+   (Sin esto, p. ej. .builder-panel{display:grid} dejaría el modal siempre visible.) */
+[hidden] { display: none !important; }
+
 html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 12px); }
 
 body {
